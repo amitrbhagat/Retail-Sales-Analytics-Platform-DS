@@ -1,0 +1,39 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# React
+node_modules/
+build/
+dist/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# ML Models (optional - keep trained models out of Git)
+*.pkl
+*.joblib
