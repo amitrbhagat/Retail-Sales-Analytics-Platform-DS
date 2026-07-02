@@ -1,0 +1,19 @@
+from django.db import models
+
+from core.models import BaseModel
+
+
+class Category(BaseModel):
+
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        db_table = "categories"
+        ordering = ["name"]
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+    def _str_(self):
+        return self.name
+
