@@ -21,18 +21,23 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('api/auth/',include("accounts.urls")),
 
-    path('api/auth/',
-        include("accounts.urls")
-    ),
+    path('api/categories/',include("categories.urls")),
 
-    path(
-        'api/categories/',
-        include("categories.urls")
-    ),
+    path('api/products/',include('products.urls')),
 
-    path(
-        'api/products/',
-        include('products.urls')
-    ),
+    path("api/stores/",include("stores.urls")),
+
+    path("api/customers/",include("customers.urls")),
+
+    path("api/inventory/",include("inventory.urls")),
+
+    path("api/sales/",include("sales.urls")),
+
+    path("api/forecast/",include("forecasting.urls")),
+
+    path("api/analytics/", include("analytics.urls")),
+
+    path("api/ai/", include("ai_assistant.urls")),
 ]
