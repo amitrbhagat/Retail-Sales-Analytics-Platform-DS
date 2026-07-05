@@ -51,6 +51,36 @@ plt.close()
 
 #----------------Revenue--------------------
 
-# df["Revenue"] = df["quantity"]*df["price"]
-# print(df["Revenue"].sum())
+df["revenue"] = df["quantity"]*df["price"]
+print(df["revenue"].sum())
 
+
+#-----------------------Product Performance-----------------------------
+
+top_products = (
+    df.groupby("description")["revenue"].sum().sort_values(ascending=False).head(10)
+)
+
+top_products.plot(kind="bar")
+
+plt.savefig("data_science/visualizations/top_products.png")
+
+plt.close()
+
+
+#---------------------Customer Behaviour-----------------------------
+
+top_customers = (
+    df.groupby("customer_id")["revenue"].sum().sort_values(ascending=False).head(10)
+)
+
+print(top_customers)
+
+
+#-----------------------Country Performance-------------------------
+
+country_sales = (
+    df.groupby("country")["revenue"].sum().sort_values(ascending=False)
+)
+
+print(country_sales.head())
