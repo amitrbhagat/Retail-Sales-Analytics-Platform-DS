@@ -58,7 +58,6 @@ class DatasetViewSet(viewsets.ModelViewSet):
             lambda x: timezone.make_aware(x)
         )
         df["Customer ID"] = df["Customer ID"].astype(int)
-        print(df["InvoiceDate"].dtype)
 
         print(df.shape)
 
