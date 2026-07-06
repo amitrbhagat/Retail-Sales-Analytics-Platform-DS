@@ -1,0 +1,7 @@
+Retail Sales EDA Report
+
+Total Records : 666460
+Total Revenue : 8598952.36
+Average Revenue : 12.90
+Unique Products : 3390
+Unique Customers : 4191

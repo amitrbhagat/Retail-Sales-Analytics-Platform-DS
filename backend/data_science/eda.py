@@ -112,3 +112,33 @@ plt.hist(
 plt.savefig("data_science/visualizations/quantity_histogram.png")
 
 plt.close()
+
+
+#--------------------------EDA findings Report-------------------------------
+
+with open(
+    "data_science/reports/eda_report.txt",
+    "w"
+) as report:
+
+    report.write("Retail Sales EDA Report\n\n")
+
+    report.write(
+        f"Total Records : {len(df)}\n"
+    )
+
+    report.write(
+        f"Total Revenue : {df['revenue'].sum():.2f}\n"
+    )
+
+    report.write(
+        f"Average Revenue : {df['revenue'].mean():.2f}\n"
+    )
+
+    report.write(
+        f"Unique Products : {df['stock_code'].nunique()}\n"
+    )
+
+    report.write(
+        f"Unique Customers : {df['customer_id'].nunique()}\n"
+    )

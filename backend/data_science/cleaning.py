@@ -14,7 +14,7 @@ django.setup()
 import pandas as pd
 import numpy as np
 
-from data_ingestion.models import RawSale
+from data_ingestion.models import RawSale 
 
 
 queryset = RawSale.objects.all().values()
