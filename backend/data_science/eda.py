@@ -84,3 +84,31 @@ country_sales = (
 )
 
 print(country_sales.head())
+
+
+#---------------------Correlation Heatmap--------------------------
+
+plt.figure(figsize=(8, 6))
+
+sns.heatmap(
+    df[["quantity", "price", "revenue"]].corr(), 
+    annot=True
+)
+
+plt.savefig("data_science/visualizations/correlation_heatmap.png")
+
+plt.close()
+
+
+#-------------------Histogram (quantity)-------------------------------------
+
+plt.figure(figsize=(8, 6))
+
+plt.hist(
+    df["quantity"],
+    bins=30
+)
+
+plt.savefig("data_science/visualizations/quantity_histogram.png")
+
+plt.close()
