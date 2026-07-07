@@ -114,6 +114,97 @@ plt.savefig("data_science/visualizations/quantity_histogram.png")
 plt.close()
 
 
+#----------------------Profit Analysis---------------------------------------
+
+df["profit"] = df["revenue"] * 0.30
+print("Total Profit :", df["profit"].sum())
+
+monthly_profit = (
+    df.groupby("month")["profit"].sum()
+)
+
+monthly_profit.plot(
+    kind="line",
+    figsize=(10,5),
+    title="Monthly Profit"
+)
+
+plt.savefig(
+    "data_science/visualizations/monthly_profit.png"
+)
+
+plt.close()
+
+
+#-----------------------Category Trends (stock code)-----------------------
+
+category_trends = (
+    df.groupby("stock_code")["revenue"].sum().sort_values(ascending=False).head(10)
+)
+
+category_trends.plot(kind="bar")
+
+plt.savefig("data_science/visualizations/category_trends.png")
+
+plt.close()
+
+
+#--------------------Pie Chart (Country Sales)--------------------------------------------
+
+country_sales = (
+    df.groupby("country")["revenue"].sum().sort_values(ascending=False).head(5)
+)
+
+country_sales.plot(
+    kind="pie",
+    autopct = "%1.1f%%"
+)
+
+plt.ylabel("")
+
+plt.savefig("data_science/visualizations/country_sales_pie.png")
+
+plt.close()
+
+
+#-------------------Price Distribution plot------------------------------------------------
+
+plt.figure(figsize=(8, 5))
+
+sns.histplot(
+    df["price"],
+    bins = 30,
+    kde = True
+)
+
+plt.savefig("data_science/visualizations/price_distribution.png")
+
+plt.close()
+
+
+#--------------------Business KPIs-------------------------------------------------
+
+print("=" * 50)
+
+print("Business KPIs")
+
+print("=" * 50)
+
+print("Total Revenue :", df["revenue"].sum())
+
+print("Total Profit :", df["profit"].sum())
+
+print("Total Orders :", df["invoice"].nunique())
+
+print("Total Customers :", df["customer_id"].nunique())
+
+print("Total Products :", df["stock_code"].nunique())
+
+print("Average Order Value :",
+      df["revenue"].sum() / df["invoice"].nunique())
+
+
+
 #--------------------------EDA findings Report-------------------------------
 
 with open(
@@ -141,4 +232,15 @@ with open(
 
     report.write(
         f"Unique Customers : {df['customer_id'].nunique()}\n"
+    )
+    report.write(
+        f"Total Profit : {df['profit'].sum()}\n"
+    )
+
+    report.write(
+        f"Total Orders : {df['invoice'].nunique()}\n"
+    )
+
+    report.write(
+        f"Average Order Value : {df['revenue'].sum()/df['invoice'].nunique()}\n"
     )

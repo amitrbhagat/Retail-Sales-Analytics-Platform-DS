@@ -5,3 +5,6 @@ Total Revenue : 8598952.36
 Average Revenue : 12.90
 Unique Products : 3390
 Unique Customers : 4191
+Total Profit : 2579685.7079999996
+Total Orders : 16825
+Average Order Value : 511.0818638930162
