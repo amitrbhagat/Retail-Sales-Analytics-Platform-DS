@@ -38,17 +38,22 @@ lr.fit(X_train, y_train)
 
 lr_pred = lr.predict(X_test)
 
+print("lr Done")
+
 
 #------------------------Random forest---------------------------------------------------
 
 rf = RandomForestRegressor(
     n_estimators=100,
+    max_depth=20,
     random_state=42
 )
 
 rf.fit(X_train, y_train)
 
 rf_pred = rf.predict(X_test)
+
+print("rf Done")
 
 
 #----------------------XGBoost------------------------------------------------------------
@@ -58,6 +63,8 @@ xgb = XGBRegressor(random_state = 42)
 xgb.fit(X_train, y_train)
 
 xgb_pred = xgb.predict(X_test)
+
+print("xgb Done")
 
 
 #----------------------LightBGM-------------------------------------------------------
@@ -72,57 +79,108 @@ lgbm.fit(X_train, y_train)
 
 lgbm_pred = lgbm.predict(X_test)
 
+print("lgbm Done")
+
 
 #----------------------Model Evaluation----------------------------------
 
 def evaluate(name, y_true, y_pred):
+
+    mae = mean_absolute_error(y_true, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+    r2 = r2_score(y_true, y_pred)
+
     print("=" * 40)
     print(name)
-    print("MAE :", mean_absolute_error(y_true, y_pred))
-    print("MSE :", np.sqrt(mean_squared_error(y_true, y_pred)))
-    print("R2 :", r2_score(y_true, y_pred))   
+    print("MAE :", mae)
+    print("RMSE :", rmse)
+    print("R2 :", r2)
 
-
-evaluate("Linear Regression", y_test, lr_pred)
-evaluate("Random Forest", y_test, rf_pred)
-evaluate("XGBoost", y_test, xgb_pred)
-evaluate("LightBGM", y_test, lgbm_pred)
+    return {
+        "MAE": mae,
+        "RMSE": rmse,
+        "R2": r2
+    }
 
 
 #-----------------------------Cross Validation-----------------------------------
 
-scores = cross_val_score(
-    rf,
-    X,
-    y,
-    cv=5,
-    scoring="r2"
-)
+# scores = cross_val_score(
+#     rf,
+#     X,
+#     y,
+#     cv=5,
+#     scoring="r2"
+# )
 
-print(scores.mean())
+# print(scores.mean())
 
 
 #---------------------------HyperParameter Tuning----------------------------
 
-params = {
-    "n_estimators" : [10,200],
-    "max_depth":[10,20]
+# params = {
+#     "n_estimators" : [10,200],
+#     "max_depth":[10,20]
+# }
+
+# grid = GridSearchCV(
+#     rf,
+#     params,
+#     cv=3
+# )
+
+# grid.fit(X_train, y_train)
+
+# print(grid.best_params_)
+
+
+#-----------------------Compare models-------------------------------------
+
+results = {
+
+    "Linear Regression": evaluate(
+        "Linear Regression",
+        y_test,
+        lr_pred
+    ),
+
+    "Random Forest": evaluate(
+        "Random Forest",
+        y_test,
+        rf_pred
+    ),
+
+    "XGBoost": evaluate(
+        "XGBoost",
+        y_test,
+        xgb_pred
+    ),
+
+    "LightGBM": evaluate(
+        "LightGBM",
+        y_test,
+        lgbm_pred
+    )
 }
 
-grid = GridSearchCV(
-    rf,
-    params,
-    cv=3
-)
+comparison = pd.DataFrame(results).T
+print(comparison)
 
-grid.fit(X_train, y_train)
+best_model_name = comparison["R2"].idxmax()
 
-print(grid.best_params_)
-
+print(f"Best Model: {best_model_name}")
 
 #-----------------------save Best model-------------------------------------
 
+models = {
+    "Linear Regression": lr,
+    "Random Forest": rf,
+    "XGBoost": xgb,
+    "LightGBM": lgbm,
+}
+
+
 joblib.dump(
-    rf,
-    "data_science/saved_models/random_forest.pkl"
+    models[best_model_name],
+    "data_science/saved_models/best_model.pkl"
 )
