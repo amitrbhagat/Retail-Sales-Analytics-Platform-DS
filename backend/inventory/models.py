@@ -19,13 +19,7 @@ class Inventory(BaseModel):
         related_name="inventories"
     )
 
-    current_stock = models.PositiveIntegerField(
-        default=0
-    )
-
-    reorder_level = models.PositiveIntegerField(
-        default=10
-    )
+    current_stock = models.PositiveIntegerField()
 
     safety_stock = models.PositiveIntegerField(
         default=20

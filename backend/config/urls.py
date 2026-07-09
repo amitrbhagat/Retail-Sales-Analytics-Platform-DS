@@ -49,6 +49,8 @@ urlpatterns = [
     path("api/ai/", include("ai_assistant.urls")),
 
     path("api/datasets/", include("data_ingestion.urls")),
+
+    path("api/recommendations/", include("inventory_engine.urls")),
 ]
 
 

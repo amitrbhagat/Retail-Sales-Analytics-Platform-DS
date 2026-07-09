@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "reports",
     "ai_assistant",
     "data_ingestion",
+    "inventory_engine",
 ]
 
 MIDDLEWARE = [
