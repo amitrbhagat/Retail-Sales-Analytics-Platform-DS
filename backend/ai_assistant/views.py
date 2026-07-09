@@ -1,17 +1,26 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from .serializers import ChatSerializer
+from .services import ask_llm
 
-class ChatAPIView(APIView):
+
+class ChatView(APIView):
 
     def post(self,request):
 
-        query=request.data.get("query")
+        serializer = ChatSerializer(
+            data = request.data
+        )
+
+        serializer.is_valid(
+            raise_exception=True
+        )
+
+        answer = ask_llm(
+            serializer.validated_data["question"]
+        )
 
         return Response({
-
-            "query":query,
-
-            "response":"Ollama integration in Phase 5."
-
+            "answer":answer
         })
