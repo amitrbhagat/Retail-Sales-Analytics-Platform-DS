@@ -12,9 +12,19 @@ function Dashboard() {
 
         const fetchDashboard = async () => {
 
-            const data = await getDashboardAnalytics();
+            try {
 
-            setAnalytics(data);
+                const data = await getDashboardAnalytics();
+
+                setAnalytics(data);
+
+            }
+
+            catch (error) {
+
+                console.log(error);
+
+            }
 
         };
 
@@ -26,25 +36,31 @@ function Dashboard() {
 
         <MainLayout>
 
-            <h1 className="text-3xl font-bold mb-5">
+            <h1 className="text-3xl font-bold mb-6">
 
                 Dashboard
 
             </h1>
 
-            <pre>
+            <div className="grid grid-cols-1">
 
-                {JSON.stringify(
+                <div className="bg-white shadow rounded p-6">
 
-                    analytics,
+                    <h2 className="text-lg font-semibold">
 
-                    null,
+                        Total Revenue
 
-                    2
+                    </h2>
 
-                )}
+                    <p className="text-3xl mt-3">
 
-            </pre>
+                        ₹ {analytics.total}
+
+                    </p>
+
+                </div>
+
+            </div>
 
         </MainLayout>
 

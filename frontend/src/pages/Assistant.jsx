@@ -10,19 +10,39 @@ function Assistant() {
 
     const [answer, setAnswer] = useState("");
 
-    const ask = async () => {
+    const [loading, setLoading] = useState(false);
+
+    const handleAsk = async () => {
+
+        if (!question.trim()) {
+
+            alert("Enter a question.");
+
+            return;
+
+        }
 
         try {
 
-            const response = await askAssistant(question);
+            setLoading(true);
 
-            setAnswer(response.answer);
+            const data = await askAssistant(question);
+
+            setAnswer(data.answer);
 
         }
 
         catch (error) {
 
             console.log(error);
+
+            alert("Unable to get response.");
+
+        }
+
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -32,9 +52,9 @@ function Assistant() {
 
         <MainLayout>
 
-            <h1 className="text-3xl font-bold mb-5">
+            <h1 className="text-3xl font-bold mb-6">
 
-                AI Assistant
+                AI Business Assistant
 
             </h1>
 
@@ -42,43 +62,61 @@ function Assistant() {
 
                 rows="5"
 
-                className="border w-full p-3"
+                className="border rounded w-full p-3"
+
+                placeholder="Ask a business question..."
 
                 value={question}
 
                 onChange={(e) =>
-
                     setQuestion(e.target.value)
-
                 }
 
             />
 
             <button
 
-                onClick={ask}
+                onClick={handleAsk}
 
                 className="bg-blue-600 text-white px-5 py-2 rounded mt-4"
 
             >
 
-                Ask
+                {
+
+                    loading
+
+                    ?
+
+                    "Thinking..."
+
+                    :
+
+                    "Ask AI"
+
+                }
 
             </button>
 
-            <div className="mt-6">
+            <div className="mt-8">
 
-                <h2 className="font-bold mb-2">
+                <h2 className="text-xl font-semibold mb-3">
 
                     Response
 
                 </h2>
 
-                <pre>
+                <div className="border rounded p-4 bg-gray-50 min-h-[120px]">
 
-                    {answer}
+                    {
 
-                </pre>
+                        answer ||
+
+                        "The AI response will appear here."
+
+                    }
+
+                </div>
 
             </div>
 
