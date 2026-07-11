@@ -51,6 +51,7 @@ urlpatterns = [
     path("api/datasets/", include("data_ingestion.urls")),
 
     path("api/recommendations/", include("inventory_engine.urls")),
+
 ]
 
 

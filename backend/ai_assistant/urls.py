@@ -1,12 +1,32 @@
 from django.urls import path
 
-from .views import ChatView
+from .views import (
+    ChatView,
+    ForecastView,
+    InventoryView,
+    AnalyticsView,
+)
 
-urlpatterns=[
+urlpatterns = [
 
     path(
         "chat/",
-        ChatView.as_view()
-    )
+        ChatView.as_view(),
+    ),
+
+    path(
+        "forecast/",
+        ForecastView.as_view(),
+    ),
+
+    path(
+        "inventory/",
+        InventoryView.as_view(),
+    ),
+
+    path(
+        "analytics/",
+        AnalyticsView.as_view(),
+    ),
 
 ]
